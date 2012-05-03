@@ -1,0 +1,7 @@
+:set guifont=Inconsolata:h11
+:colorscheme candycode
+:set transp=4
+:set guioptions-=L
+:set guioptions-=r
+:set fuopt+=maxhorz
+
