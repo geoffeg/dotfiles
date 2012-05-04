@@ -1,0 +1,89 @@
+### COMPLETION ###
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' max-errors 2 numeric
+#zstyle :compinstall filename '/home/geoffeg/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+### COMMAND HISTORY ###
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+
+### OPTIONS ###
+setopt autocd             # typing a directory name alone switches to that directory
+setopt rmstarwait         # Pause for 10 secs before allowing rm *
+setopt prompt_subst       # allow parameter expansion in prompts
+
+#PS1='%* %n@%m:%~%(!.#.$) ' # 0 05/03 18:53 geoff.gallaway@localhost:~$
+PATH=$PATH:/opt/bin:/Users/geoffeg/bin:~/.zsh:/opt/local/bin
+export SVN_EDITOR=`which vim`
+### PROMPT CUSTOMIZATIONS ###
+autoload -U colors && colors
+autoload -U promptinit
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' get-revision true
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' formats "%u %F{6}%b%F{3}(%6.6i) %F{6}%m"
+zstyle ':vcs_info:git*+set-message:*' hooks git-st git-untracked
+
+zstyle ':vcs_info:git*:*' stagedstr "S"
+zstyle ':vcs_info:git*:*' unstagedstr "U"
+
+precmd () { vcs_info }
+PS1='%F{5}[%F{2}%n%F{5}] %F{3}%3~ %f%# '
+RPROMPT='${vcs_info_msg_0_}'
+
+function +vi-git-st() {
+	local ahead behind remote
+	local -a gitstatus
+
+	# Are we on a remote-tracking branch?
+	remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} --symbolic-full-name --abbrev-ref 2>/dev/null)}
+
+	if [[ -n ${remote} ]] ; then
+		# for git prior to 1.7
+		# ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
+		ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+		(( $ahead )) && gitstatus+=( "+${ahead// /}" )
+
+		# for git prior to 1.7
+		# behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
+		behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
+		(( $behind )) && gitstatus+=( "-${behind// /}" )
+
+		hook_com[misc]="[${remote} ${(j:/:)gitstatus}]"
+	fi
+}
+
+function +vi-git-untracked() {
+	local untracked
+
+	#check if there's at least 1 untracked file
+	untracked=${$(git ls-files --exclude-standard --others | head -n 1)}
+
+	if [[ -n ${untracked} ]] ; then
+		hook_com[unstaged]="${hook_com[unstaged]}${yellow}?${gray}"
+	fi
+}
+
+#fpath=($fpath $HOME/.zsh/func)
+#autoload -U promptinit && promptinit
+#prompt wunjo
+
+### AUTOJUMP ###
+
+function autojump_preexec() {
+    { (autojump -a "$(pwd)"&)>/dev/null 2>>|${HOME}/.autojump_errors ; } 2>/dev/null
+}
+
+typeset -ga preexec_functions
+preexec_functions+=autojump_preexec
+
+### ALIASES
+alias jumpstat="autojump --stat"
+
+function j { local new_path="$(autojump $@)";if [ -n "$new_path" ]; then echo -e "\\033[31m${new_path}\\033[0m"; cd "$new_path";fi }
+source ~/.profile
