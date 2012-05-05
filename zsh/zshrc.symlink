@@ -37,11 +37,10 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' formats "%u %F{6}%b%F{3}(%6.6i) %F{6}%m%{$reset_color%}"
 zstyle ':vcs_info:git*+set-message:*' hooks git-st git-untracked
 
-zstyle ':vcs_info:git*:*' stagedstr "S"
-zstyle ':vcs_info:git*:*' unstagedstr "U"
+zstyle ':vcs_info:git*:*' stagedstr "%{$fg_bold[green]%}S%{$reset_color%}"
+zstyle ':vcs_info:git*:*' unstagedstr "%{$fg_bold[red]%}U%{$reset_color%}"
 
 precmd () { vcs_info }
-#PS1='%F{5}[%F{2}%n%F{5}] %F{3}%3~ %f%# '
 RPROMPT='${vcs_info_msg_0_}'
 
 function +vi-git-st() {
@@ -62,7 +61,7 @@ function +vi-git-st() {
 		behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
 		(( $behind )) && gitstatus+=( "-${behind// /}" )
 
-		hook_com[misc]="[${remote} ${(j:/:)gitstatus}]"
+		hook_com[misc]="[${remote}${(j:/:)gitstatus}]"
 	fi
 }
 
@@ -92,5 +91,6 @@ preexec_functions+=autojump_preexec
 
 ### ALIASES
 alias jumpstat="autojump --stat"
+alias ls="ls -GF"
 
 function j { local new_path="$(autojump $@)";if [ -n "$new_path" ]; then echo -e "\\033[31m${new_path}\\033[0m"; cd "$new_path";fi }
