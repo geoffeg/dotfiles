@@ -6,6 +6,9 @@ zstyle ':completion:*' max-errors 2 numeric
 autoload -Uz compinit
 compinit
 
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
 ### COMMAND HISTORY ###
 HISTFILE=~/.histfile
 HISTSIZE=10000                 # Number of in-memory lines of history
@@ -22,7 +25,6 @@ setopt list_types              # Show file types in completion lists
 setopt path_dirs               # Allow partial paths in command names (X11/bin/xinit)
 setopt hist_ignore_all_dups    # Don't record duplicate commands
 setopt hist_ignore_space       # Don't record commands in the history that start with a space
-
 
 autoload -U colors && colors
 PS1="%(?..%{$fg_bold[red]%}[%?]%{$reset_color%} )[%{$fg_bold[cyan]%}%*%{$reset_color%}] %{$fg_bold[green]%}%n%{$reset_color%}@%{$fg_bold[yellow]%}%m%{$reset_color%}:%~%(!.#.$) "
