@@ -19,8 +19,9 @@ set-option -g status-fg green
 # try to set the window/panel title to the running application?
 set-option -g set-titles on
 
+set -g status-left-length 30
 set -g status-right-length 40
-set -g status-left '#[fg=black] #W'
+set -g status-left '#[fg=black] #S:#W:#P'
 set -g status-right '#[fg=black] #(whoami)@#H '
 set -g window-status-format "#[fg=colour214,bg=colour234] #W "
 set -g window-status-current-format "#[fg=black,bg=colour202] #W "

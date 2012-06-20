@@ -35,3 +35,7 @@ inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?
 \ "\"\\<lt>c-n>\\<lt>c-p>\\<lt>c-n>\" :" .
 \ "\" \\<lt>bs>\\<lt>C-n>\"\<CR>"
 imap <C-@> <C-Space>
+
+" Settings for VimClojure
+let vimclojure#HighlightBuiltins=1  " Highlight Clojure's builtins
+let vimclojure#ParenRainbow=1       " Rainbow parens 
