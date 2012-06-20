@@ -7,6 +7,9 @@ zstyle ':completion:*' max-errors 2 numeric
 autoload -Uz compinit
 compinit
 
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
 ### COMMAND HISTORY ###
 HISTFILE=~/.histfile
 HISTSIZE=10000                 # Number of in-memory lines of history
