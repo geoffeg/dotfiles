@@ -1,5 +1,6 @@
 # allow the mouse to copy text
 set -g mode-mouse copy-mode
+set -g default-terminal "screen-256color"
 
 # focus a pane by clicking
 set -g mouse-select-pane on
@@ -13,8 +14,8 @@ set -g base-index 1
 # allow utf8 characters in the status line
 set-option -g status-utf8 on
 # set general colors
-set-option -g status-bg colour214
-set-option -g status-fg green
+set-option -g status-bg red
+set-option -g status-fg black
 
 # try to set the window/panel title to the running application?
 set-option -g set-titles on
@@ -23,15 +24,15 @@ set -g status-left-length 30
 set -g status-right-length 40
 set -g status-left '#[fg=black] #S:#W:#P'
 set -g status-right '#[fg=black] #(whoami)@#H '
-set -g window-status-format "#[fg=colour214,bg=colour234] #W "
-set -g window-status-current-format "#[fg=black,bg=colour202] #W "
+set -g window-status-format "#[fg=colour234,bg=black] #W "
+set -g window-status-current-format "#[fg=black,bg=white] #W "
 set -g status-justify centre
 
 # split-panels border colors
 set-option -g pane-active-border-fg black
-set-option -g pane-active-border-bg colour214
-set-option -g pane-border-bg colour234
-set-option -g pane-border-fg black
+set-option -g pane-active-border-bg red
+set-option -g pane-border-bg black
+set-option -g pane-border-fg red
 
 # active/non-active status line window colors
 set-option -g window-status-current-bg cyan
