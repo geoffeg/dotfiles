@@ -29,14 +29,13 @@ set -g window-status-current-format "#[fg=black,bg=white] #W "
 set -g status-justify centre
 
 # split-panels border colors
-set-option -g pane-active-border-fg black
-set-option -g pane-active-border-bg red
+set-option -g pane-active-border-fg red
 set-option -g pane-border-bg black
 set-option -g pane-border-fg red
 
 # active/non-active status line window colors
-set-option -g window-status-current-bg cyan
-set-option -g window-status-current-fg black
+set-option -g window-status-current-bg black
+set-option -g window-status-current-fg colour8
 
 bind r source-file ~/.tmux.conf
 
