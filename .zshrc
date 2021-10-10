@@ -1,0 +1,47 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# # Initialization code that may require console input (password prompts, [y/n]
+# # confirmations, etc.) must go above this block, everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
+MAILCHECK=0
+HISTFILE=~/.histfile
+HISTSIZE=10000                 # Number of in-memory lines of history
+SAVEHIST=100000                # Save 10,000 events to the history
+REPORTTIME=60                  # Print statistics for commands who take longer than 60 seconds
+TIMEFMT="%J  %U user %S system %P cpu %MM memory %*E total"
+EDITOR=`which vi`
+
+setopt auto_cd                 # typing a directory name alone switches to that directory
+setopt rm_star_wait            # Pause for 10 secs before allowing rm *
+setopt prompt_subst            # allow parameter expansion in prompts
+setopt ignore_eof              # Don't exit the shell on EOF (ctrl-d)
+setopt share_history           # immediately save commands to history + use timestamps
+setopt list_types              # Show file types in completion lists
+setopt path_dirs               # Allow partial paths in command names (X11/bin/xinit)
+setopt hist_ignore_all_dups    # Don't record duplicate commands
+setopt hist_ignore_space       # Don't record commands in the history that start with a space
+
+source $HOME/.antigen.zsh
+
+antigen use oh-my-zsh
+
+antigen bundle git
+antigen bundle ssh-agent
+antigen bundle direnv
+antigen bundle nvmrc
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+
+# Load the theme
+antigen theme https://github.com/romkatv/powerlevel10k powerlevel10k
+
+# Tell antigen that you're done
+antigen apply
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
