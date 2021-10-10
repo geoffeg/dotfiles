@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+
+  vars:
+    dotfiles_repo: https://github.com/geoffeg/dotfiles
+    dotfiles_repo_local_destination: ~/src/dotfiles
+
+  roles:
+    - role: geerlingguy.dotfiles
+
