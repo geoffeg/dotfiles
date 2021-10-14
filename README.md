@@ -11,13 +11,9 @@ Clone the repo and run:
 
 ```
 ansible-galaxy install -r requirements.yml
-ansible-playbook -K dotfiles.yml -i 'localhost,' --user=geoffeg --connection=local
+ansible-playbook -K dotfiles.yml
 ```
 
 ## License
 
 MIT
-
-```
-
-```
