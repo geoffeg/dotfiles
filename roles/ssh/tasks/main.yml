@@ -1,0 +1,7 @@
+---
+- name: Install .ssh/config link
+  file:
+    src: "{{ role_path }}/files/config"
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/config"
+    state: link
+    force: true

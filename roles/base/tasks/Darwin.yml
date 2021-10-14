@@ -1,0 +1,28 @@
+---
+- name: install homebrew packages
+  vars:
+    platform_packages:
+      - the_silver_searcher
+      - youtube-dl
+      - awscli
+      - coreutils
+      - gnu-sed
+  community.general.homebrew:
+    name: "{{ base_packages + platform_packages }}"
+    state: present
+
+- name: make sure casks are installed
+  community.general.homebrew_cask:
+    name:
+      - 1password
+      - adoptopenjdk
+      - docker
+      - firefox
+      - font-source-code-pro-for-powerline
+      - google-chrome
+      - istat-menus
+      - iterm2
+      - postico
+      - slack
+      - spotify
+    state: present

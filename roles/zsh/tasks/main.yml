@@ -1,0 +1,48 @@
+---
+# OS X includes zsh as the default shell
+- name: install zsh and curl if needed
+  become: true
+  package:
+    name:
+      - zsh
+      - curl
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Sets zsh as default shell
+  become: true
+  become_user: root
+  command: "chsh -s /bin/zsh {{ ansible_user_id }}"
+  register: zsh_for_user
+  failed_when: zsh_for_user.rc >= 1
+  changed_when: zsh_for_user.rc == 0
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Check for oh-my-zsh
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.oh-my-zsh"
+  register: oh_my_zsh_stat
+
+- name: Install oh-my-zsh
+  raw: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
+  when: not oh_my_zsh_stat.stat.exists
+
+- name: Install .zshrc link
+  file:
+    src: "{{ role_path }}/files/zshrc"
+    dest: "{{ lookup('env', 'HOME') }}/.zshrc"
+    state: link
+    force: true
+
+- name: Install powerlevel10k
+  file:
+    src: "{{ role_path }}/files/p10k.zsh"
+    dest: "{{ lookup('env', 'HOME') }}/.p10k.zsh"
+    state: link
+    force: true
+
+- name: Install antigen plugin manager
+  get_url:
+    url: https://git.io/antigen
+    dest: "{{ lookup('env', 'HOME') }}/.antigen.zsh"
+    mode: "0644"

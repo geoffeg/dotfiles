@@ -1,0 +1,13 @@
+---
+- name: Ensure ~/bin directory exists
+  file:
+    path: ~/bin/
+    state: directory
+    mode: 0744
+
+- name: Download neovim
+  get_url:
+    url: "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+    checksum: "sha256:https://github.com/neovim/neovim/releases/latest/download/nvim.appimage.sha256sum"
+    dest: ~/bin/nvim.appimage
+    mode: 0744

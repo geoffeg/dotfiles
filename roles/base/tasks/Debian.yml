@@ -1,0 +1,12 @@
+---
+- name: install base packages
+  vars:
+    platform_packages:
+      - build-essential
+      - cmake
+      - silversearcher-ag
+      - software-properties-common
+  package:
+    name: "{{ base_packages + platform_packages }}"
+    state: present
+  become: true

@@ -1,0 +1,10 @@
+---
+- name: install neovim
+  community.general.homebrew:
+    name: neovim
+    state: present
+
+- name: install neovim-python
+  ansible.builtin.pip:
+    name: neovim
+    extra_args: --user
