@@ -26,6 +26,10 @@ setopt path_dirs               # Allow partial paths in command names (X11/bin/x
 setopt hist_ignore_all_dups    # Don't record duplicate commands
 setopt hist_ignore_space       # Don't record commands in the history that start with a space
 
+if [ -z "$VSCODE_PID" ]; then
+  #export NVM_LAZY_LOAD=true
+fi
+
 source $HOME/.antigen.zsh
 
 antigen use oh-my-zsh
@@ -33,10 +37,12 @@ antigen use oh-my-zsh
 antigen bundle git
 antigen bundle ssh-agent
 antigen bundle direnv
-antigen bundle nvmrc
+export NVM_AUTO_USE=true
+antigen bundle lukechilds/zsh-nvm
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
+antigen bundle unixhorn/fzf-zsh-plugin@main
 
 # Load the theme
 antigen theme https://github.com/romkatv/powerlevel10k powerlevel10k
